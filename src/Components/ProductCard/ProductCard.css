@@ -1,0 +1,175 @@
+.product-card{
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    border: 1px solid #e5e7eb;
+
+    transition: 0.3s;
+
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+}
+
+.product-card:hover{
+
+    transform: translateY(-8px);
+
+    box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+}
+
+.product-image{
+
+    width: 180px;
+    height: 180px;
+
+    object-fit: contain;
+
+    margin-bottom: 20px;
+}
+
+.product-card h3{
+
+    color: #111827;
+
+    margin-bottom: 10px;
+}
+
+.rating{
+
+    color: #f59e0b;
+
+    margin-bottom: 15px;
+}
+
+.product-card h2{
+
+    color: #2563eb;
+
+    margin-bottom: 12px;
+}
+
+.platform{
+
+    color: #6b7280;
+
+    margin-bottom: 20px;
+}
+
+.platform span{
+
+    color: #16a34a;
+    font-weight: 600;
+}
+
+.product-card button{
+
+    width: 100%;
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #2563eb;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+.product-card button:hover{
+
+    background: #1d4ed8;
+}
+.product-badges{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin:15px 0;
+}
+
+
+.brand{
+    color:#6b7280;
+    margin:8px 0;
+}
+
+.price{
+    color:#111827;
+    margin:15px 0 8px;
+}
+
+.platform{
+    color:#6b7280;
+    margin-bottom:20px;
+}
+
+.platform span{
+    color:#2563eb;
+    font-weight:600;
+}
+
+.details-btn{
+    width:100%;
+    padding:12px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.details-btn:hover{
+    background:#1d4ed8;
+}
+
+.card-buttons{
+
+    display:flex;
+
+    gap:12px;
+
+    margin-top:20px;
+}
+
+.details-btn{
+
+    flex:1;
+}
+
+.compare-btn{
+
+    flex:1;
+
+    border:none;
+
+    background:#111827;
+
+    color:white;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    padding:12px;
+}
+
+.compare-btn:hover{
+
+    background:#374151;
+}

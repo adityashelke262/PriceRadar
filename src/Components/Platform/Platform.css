@@ -1,0 +1,67 @@
+.platforms{
+    padding: 100px 80px;
+    text-align: center;
+    background: #ffffff;
+}
+
+.platforms h2{
+    font-size: 2.5rem;
+    color: #111827;
+    margin-bottom: 15px;
+}
+
+.platforms p{
+    color: #6b7280;
+    margin-bottom: 50px;
+    font-size: 1.1rem;
+}
+
+.platform-grid{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 25px;
+}
+
+.platform-card{
+    background: white;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+
+    padding: 35px;
+
+    font-size: 1.1rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.platform-card:hover{
+    transform: translateY(-5px);
+
+    border-color: #2563eb;
+
+    box-shadow: 0 10px 25px rgba(37,99,235,0.15);
+}
+
+@media(max-width:900px){
+
+    .platform-grid{
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .platforms{
+        padding: 80px 30px;
+    }
+}
+
+@media(max-width:600px){
+
+    .platform-grid{
+        grid-template-columns: 1fr;
+    }
+}
