@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./Pages/Home/Home";
 import Search from "./Pages/Search/Search";
-import Product from "./Pages/Product/Product";
+import ProductOverview from "./Pages/ProductOverview/ProductOverview";
 import Compare from "./Pages/Compare/Compare";
 import About from "./Pages/About/About";
 import ScrollToTop from "./Components/ScrollToTop";
@@ -27,7 +27,7 @@ function App() {
 
         <Route path="/Search" element={<Search />} />
 
-        <Route path="/Product" element={<Product />} />
+        <Route path="/Product" element={<ProductOverview />} />
 
         <Route path="/Compare" element={<Compare />} />
 
