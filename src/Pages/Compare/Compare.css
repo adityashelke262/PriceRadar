@@ -128,7 +128,8 @@
 
 .compare-card{
 
-    width:340px;
+    width:100%;
+max-width:340px;
 
     background:white;
 
@@ -432,8 +433,9 @@
 
 .category-selector{
 
-    width:300px;
-
+    width:100%;
+max-width:320px;
+margin:0 auto 40px;
     margin:0 auto 50px;
 
     display:flex;
@@ -481,7 +483,7 @@
 
 @media(max-width:768px){
 
-.compare-products{
+.compare-cards{
 
     flex-direction:column;
 
@@ -490,6 +492,8 @@
     gap:25px;
 
 }
+
+
 
 .vs-circle{
 
@@ -552,6 +556,58 @@ grid-template-columns:1fr;
 .recommendation{
 
     padding:18px;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.selector-section{
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+.selector-box{
+
+    width:100%;
+
+    max-width:320px;
+
+}
+
+.selector-box select{
+
+    width:100%;
+
+}
+
+.vs-circle{
+
+    transform:none;
+
+}
+
+}
+
+.table-wrapper{
+
+    width:100%;
+
+    overflow-x:auto;
+
+    -webkit-overflow-scrolling:touch;
+
+}
+
+@media(max-width:768px){
+
+.compare{
+
+    padding:90px 18px 40px;
 
 }
 

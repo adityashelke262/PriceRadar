@@ -5,21 +5,17 @@
   font-family:  sans-serif;
 }
 
-.container{
-  width: 100vw;
-  height: 100vh;
-  background: rgb(189, 165, 165);
-}
-
 html,
 body{
     overflow-x:hidden;
 }
 
-*{
-    box-sizing:border-box;
+img{
+    display:block;
+    max-width:100%;
+    height:auto;
 }
 
-img{
-    max-width:100%;
+.page-content{
+    padding-top:90px;
 }

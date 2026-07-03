@@ -305,7 +305,15 @@ display:none;
 
     width:260px;
 
-    height:calc(100vh - 80px);
+    height:auto;
+
+max-height:80vh;
+
+overflow-y:auto;
+
+padding-bottom:25px;
+
+border-radius:0 0 18px 18px;
 
     background:white;
 

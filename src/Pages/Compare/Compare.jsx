@@ -194,9 +194,13 @@ const Compare = () => {
       {/* Comparison Table */}
 
       <div className="comparison-section">
-        <h2>Detailed Comparison</h2>
 
-        <table className="comparison-table">
+<h2>Detailed Comparison</h2>
+
+<div className="table-wrapper">
+
+<table className="comparison-table">
+
           <thead>
             <tr>
               <th>Feature</th>
@@ -255,6 +259,7 @@ const Compare = () => {
             </tr>
           </tbody>
         </table>
+        </div>
       </div>
 
       {/* AI Recommendation */}

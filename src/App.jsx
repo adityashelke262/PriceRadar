@@ -7,7 +7,6 @@ import Search from "./Pages/Search/Search";
 import ProductOverview from "./Pages/ProductOverview/ProductOverview";
 import Compare from "./Pages/Compare/Compare";
 import ScrollToTop from "./Components/ScrollToTop";
-import Navbar from "./Components/Navbar/Navbar";
 import Layout from "./Components/Layout/Layout";
 
 function App() {
@@ -15,17 +14,13 @@ function App() {
     <BrowserRouter>
       <ScrollToTop />
 
-      <Navbar />
-
       <Routes>
         <Route element={<Layout />}>
-    <Route path="/" element={<Home />} />
-    <Route path="/search" element={<Search />} />
-    <Route path="/compare" element={<Compare />} />
-    <Route path="/product/:id" element={<ProductOverview />} />
-    </Route>
-
-      
+          <Route path="/" element={<Home />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/compare" element={<Compare />} />
+          <Route path="/product/:id" element={<ProductOverview />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
