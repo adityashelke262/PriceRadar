@@ -1,5 +1,5 @@
 import iphone17 from "../assets/iphone17.png";
-import iphone17pro from "../assets/iphone17Pro.png";
+import iphone17pro from "../assets/iphone17pro.png";
 import s26 from "../assets/s26.png";
 import s26ultra from "../assets/s26ultra.png";
 import nothing4a from "../assets/nothing4a.png";
