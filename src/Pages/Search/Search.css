@@ -28,8 +28,8 @@
 .filter-section{
     display: flex;
     justify-content: center;
-    gap: 20px;
-
+   gap:14px;
+    flex-wrap:wrap;
     margin-bottom: 40px;
 }
 
@@ -43,9 +43,9 @@
 }
 
 .products-grid{
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
-    gap: 30px;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+    gap:24px;
 }
 
 
@@ -56,18 +56,16 @@
 }
 
 .search-hero{
-    position: relative;
-    width: 100%;
-    margin-top: 0;
-    margin-bottom: 80px;
+    position:relative;
+    width:100%;
+    margin-top:80px;
+    margin-bottom:60px;
 }
 
 .hero-banner{
     width: 100%;
-    height: 420px;
+    height: 330px;
     object-fit: cover;
-    display: block;
-    border-radius: 0;
 }
 
 .hero-content{
@@ -81,10 +79,8 @@
 }
 
 .hero-content h1{
-    font-size: 64px;
-    font-weight: 800;
-    line-height: 1.15;
-    margin-bottom: 20px;
+    font-size: 48px;
+    margin-bottom: 15px;
 }
 
 .hero-content h1 span{
@@ -92,15 +88,19 @@
 }
 
 .hero-content p{
-    font-size: 22px;
-    line-height: 1.7;
-    max-width: 800px;
-    margin: auto;
+
+    font-size:18px;
+
+    max-width:650px;
+
+    line-height:1.6;
+
+    margin:0 auto;
 }
 .search-content{
-    width: 90%;
-    max-width: 1400px;
-    margin: 0 auto;
+    width:min(1400px,92%);
+
+margin:auto;
 }
 
 .hero-search{
@@ -131,7 +131,7 @@
 
     width:100%;
 
-    height:65px;
+    height:58px;
 
     border:none;
 
@@ -141,7 +141,7 @@
 
     padding:0 25px 0 65px;
 
-    font-size:18px;
+    font-size:16px;
 
     background:white;
 
@@ -165,9 +165,8 @@
 
 .suggestions{
 
-     width:100%;
-
-    max-width:90%;
+    width:100%;
+    max-width:100%;
 
     position:absolute;
 
@@ -228,7 +227,7 @@
 
     align-items:center;
 
-    padding:90px 20px;
+    padding:70px 20px;
 
     text-align:center;
 }
@@ -295,3 +294,182 @@
     }
 }
 
+.search-banner{
+
+    padding:110px 80px 60px;
+
+    text-align:center;
+
+    background:linear-gradient(
+        180deg,
+        #f8fbff,
+        #ffffff
+    );
+}
+
+.search-banner h1{
+
+    font-size:42px;
+
+    margin-bottom:20px;
+}
+
+.search-banner p{
+
+    max-width:600px;
+
+    margin:20px auto 0;
+
+    color:#6b7280;
+}
+
+.search-input{
+
+    width:100%;
+
+    max-width:700px;
+
+    margin:auto;
+}
+
+/* ========================= */
+/* Tablet */
+/* ========================= */
+
+@media (max-width:992px){
+
+.hero-banner{
+
+height:280px;
+
+}
+
+.hero-content{
+
+width:90%;
+
+}
+
+.hero-content h1{
+
+font-size:38px;
+
+}
+
+.hero-content p{
+
+font-size:17px;
+
+}
+
+.products-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+/* ========================= */
+/* Mobile */
+/* ========================= */
+
+@media(max-width:768px){
+
+.search-hero{
+
+margin-top:75px;
+
+}
+
+.hero-banner{
+
+height:250px;
+
+}
+
+.hero-content{
+
+width:92%;
+
+}
+
+.hero-content h1{
+
+font-size:30px;
+
+}
+
+.hero-content p{
+
+font-size:15px;
+
+margin-top:10px;
+
+}
+
+.search-container{
+
+width:100%;
+
+}
+
+.search-container input{
+
+height:52px;
+
+font-size:15px;
+
+padding-left:55px;
+
+}
+
+.search-icon{
+
+left:18px;
+
+}
+
+.filter-section{
+
+flex-direction:column;
+
+align-items:center;
+
+}
+
+.filter-section select{
+
+width:260px;
+
+}
+
+.products-grid{
+
+grid-template-columns:1fr;
+
+gap:20px;
+
+}
+
+}
+
+/* ========================= */
+/* Small Mobile */
+/* ========================= */
+
+@media(max-width:480px){
+
+.hero-content h1{
+
+font-size:26px;
+
+}
+
+.hero-content p{
+
+display:none;
+
+}
+
+}

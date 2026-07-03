@@ -1,19 +1,17 @@
 /* HERO SECTION */
 
 .hero{
+    min-height: 72vh;
 
-    min-height: calc(100vh - 100px);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 
-    padding: 40px 80px 60px;
+    gap:60px;
 
+    padding:40px 80px 60px;
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    gap: 80px;
-
-   
+   overflow:hidden;
 
     background: linear-gradient(
         180deg,
@@ -29,7 +27,7 @@
 }
 
 .hero-left h1{
-    font-size: 4rem;
+    font-size: 3.6rem;
     line-height: 1.1;
 
     color: #111827;
@@ -47,7 +45,7 @@
 
     line-height: 1.8;
 
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 
     max-width: 650px;
 }
@@ -60,7 +58,7 @@
     gap:18px;
 
     width:100%;
-    max-width:720px;
+    max-width:680px;
 }
 
 .hero-search input{
@@ -74,7 +72,7 @@
     font-size:17px;
     
 border:1px solid #e5e7eb;
-border-radius: 20px; 
+border-radius: 16px; 
 }
 
 .hero-search input:focus{
@@ -84,7 +82,7 @@ border-radius: 20px;
 }
 
 .hero-search button{
-    padding: 18px 28px;
+    padding:16px 24px;
 
     border: none;
     border-radius: 50px;
@@ -118,20 +116,20 @@ border-radius: 20px;
 /* PRODUCT CARD */
 
 .comparison-card{
-    width: 420px;
 
-    background: white;
+    width:360px;
 
-    border-radius: 24px;
+    padding:20px;
 
-    padding: 30px;
+    border-radius:20px;
 
-    border: 1px solid #e5e7eb;
+    border:1px solid #e5e7eb;
 
-    box-shadow:
-        0 10px 30px rgba(0,0,0,0.08);
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
 
     transition: 0.3s ease;
+
+    background:#fff;
 }
 
 .comparison-card:hover{
@@ -142,55 +140,53 @@ border-radius: 20px;
 }
 
 .comparison-card h2{
-    font-size: 28px;
+    font-size:22px;
 
-    color: #111827;
+    text-align:center;
 
-    margin-bottom: 25px;
+    margin-bottom:15px;
 }
 
 /* PRICE ROWS */
 
 .price-row{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 
-    padding: 15px 0;
+    display:flex;
 
-    border-bottom: 1px solid #f3f4f6;
+    justify-content:space-between;
 
-    font-size: 16px;
+    align-items:center;
+
+    padding:10px 0;
+
+    font-size:15px;
+
+    border-bottom:1px solid #f3f4f6;
 }
 
 .price-row:last-of-type{
     border-bottom: none;
 }
 
-/* BEST PRICE */
-
-.best{
-    color: #16a34a;
-
-    font-weight: 700;
-}
-
 /* SAVINGS */
 
 .saving{
-    margin-top: 25px;
 
-    padding: 15px;
+    margin-top:15px;
 
-    text-align: center;
+    padding:12px;
 
-    background: #dcfce7;
+    background:#ecfdf5;
 
-    color: #166534;
+    color:#15803d;
 
-    border-radius: 12px;
+    border-radius:10px;
 
-    font-weight: 600;
+    text-align:center;
+
+    font-weight:600;
+
+    font-size:14px;
 }
 
 /* RESPONSIVE */
@@ -218,15 +214,25 @@ border-radius: 20px;
 @media(max-width:768px){
 
     .hero-left h1{
-        font-size: 2.8rem;
-    }
+
+    font-size:3.6rem;
+
+    line-height:1.1;
+
+    margin-bottom:18px;
+}
 
     .hero-left p{
-        font-size: 1rem;
-    }
+
+    margin-bottom:28px;
+
+    max-width:560px;
+}
 
     .hero-search{
-        flex-direction: column;
+        width:100%;
+
+    max-width:650px;flex-direction: column;
     }
 
     .hero-search input{
@@ -255,9 +261,13 @@ border-radius: 20px;
 }
 
 .product-image{
-    width: 180px;
-    display: block;
-    margin: 0 auto 20px;
+    width:150px;
+
+    height:150px;
+
+    object-fit:contain;
+
+    margin:0 auto 15px;
 }
 
 .best{
@@ -370,7 +380,7 @@ border-radius: 20px;
 
     display:grid;
 
-    grid-template-columns:repeat(4,1fr);
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
 
     gap:30px;
 }
