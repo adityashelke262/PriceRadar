@@ -8,6 +8,10 @@
     background: #f8fbff;
 }
 
+.compare-products{
+    display:flex;
+    justify-content:space-between;
+}
 /* ==============================
         HEADER
 ================================ */
@@ -473,4 +477,82 @@
     border-color:#2563eb;
 
     box-shadow:0 0 0 4px rgba(37,99,235,.15);
+}
+
+@media(max-width:768px){
+
+.compare-products{
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:25px;
+
+}
+
+.vs-circle{
+
+    transform:rotate(90deg);
+
+}
+
+}
+
+@media(max-width:480px){
+
+.ai-summary{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+@media (max-width:992px){
+
+.ai-grid{
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:18px;
+
+}
+
+}
+
+@media (max-width:768px){
+
+.ai-grid{
+
+    grid-template-columns:1fr;
+
+    gap:15px;
+
+}
+
+.ai-card{
+
+    padding:25px;
+
+}
+
+.ai-box{
+
+    padding:18px;
+
+}
+
+.ai-box h3{
+
+    font-size:16px;
+
+}
+
+.recommendation{
+
+    padding:18px;
+
+}
+
 }
