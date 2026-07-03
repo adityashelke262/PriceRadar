@@ -1,67 +1,121 @@
-.platforms{
-    padding: 100px 80px;
-    text-align: center;
-    background: #ffffff;
+/* =============================== */
+/* TRUSTED PLATFORMS */
+/* =============================== */
+
+.trusted-platforms{
+
+    padding:100px 80px;
+
+    background:#fff;
+
+    text-align:center;
 }
 
-.platforms h2{
-    font-size: 2.5rem;
-    color: #111827;
-    margin-bottom: 15px;
+.trusted-header{
+
+    max-width:700px;
+
+    margin:0 auto 60px;
 }
 
-.platforms p{
-    color: #6b7280;
-    margin-bottom: 50px;
-    font-size: 1.1rem;
+.trusted-header h2{
+
+    font-size:2.7rem;
+
+    color:#111827;
+
+    margin-bottom:18px;
+}
+
+.trusted-header p{
+
+    font-size:1.1rem;
+
+    color:#6b7280;
+
+    line-height:1.8;
 }
 
 .platform-grid{
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    gap: 25px;
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:28px;
 }
 
 .platform-card{
-    background: white;
 
-    border: 1px solid #e5e7eb;
-    border-radius: 18px;
+    background:#fff;
 
-    padding: 35px;
+    border:1px solid #e5e7eb;
 
-    font-size: 1.1rem;
-    font-weight: 600;
+    border-radius:22px;
 
-    cursor: pointer;
+    height:170px;
 
-    transition: 0.3s ease;
+    display:flex;
 
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    transition:.3s;
+
+    cursor:pointer;
 }
 
 .platform-card:hover{
-    transform: translateY(-5px);
 
-    border-color: #2563eb;
+    transform:translateY(-8px);
 
-    box-shadow: 0 10px 25px rgba(37,99,235,0.15);
+    border-color:#2563eb;
+
+    box-shadow:0 18px 45px rgba(0,0,0,.08);
 }
 
-@media(max-width:900px){
+.platform-card img{
+
+    width:120px;
+
+    height:60px;
+
+    object-fit:contain;
+
+    margin-bottom:18px;
+}
+
+.platform-card h4{
+
+    color:#374151;
+
+    font-size:16px;
+
+    font-weight:600;
+}
+
+/* =============================== */
+
+@media(max-width:1000px){
 
     .platform-grid{
-        grid-template-columns: repeat(2,1fr);
-    }
 
-    .platforms{
-        padding: 80px 30px;
+        grid-template-columns:repeat(2,1fr);
     }
 }
 
 @media(max-width:600px){
 
+    .trusted-platforms{
+
+        padding:70px 20px;
+    }
+
     .platform-grid{
-        grid-template-columns: 1fr;
+
+        grid-template-columns:1fr;
     }
 }

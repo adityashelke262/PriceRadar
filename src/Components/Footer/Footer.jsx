@@ -1,55 +1,76 @@
-import React from 'react'
-import './Footer.css'
+import "./Footer.css";
+import logo from "../../assets/a.png";
+import {
+  FiLinkedin,
+  FiInstagram,
+  FiGithub,
+  FiMail,
+} from "react-icons/fi";
 
 const Footer = () => {
   return (
-        <footer className="footer">
+    <footer className="footer">
 
-      <div className="footer-top">
+      {/* Left */}
 
-        <div className="footer-brand">
-          <h2>PriceRadar</h2>
-          <p>
-            Compare prices across multiple platforms and
-            discover the best deals on the internet.
-          </p>
-        </div>
+      <div className="footer-left">
+
+        <img className="footer-logo" src={logo} alt="PriceRadar" />
+
+        <h3>PriceRadar</h3>
+
+      </div>
+
+      {/* Center */}
+
+      <div className="footer-center">
 
         <div className="footer-links">
 
-          <div className="footer-column">
-            <h3>Company</h3>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-            <a href="#">Careers</a>
-          </div>
+          <a href="/">About</a>
 
-          <div className="footer-column">
-            <h3>Resources</h3>
-            <a href="#">Compare Products</a>
-            <a href="#">Price Alerts</a>
-            <a href="#">Wishlist</a>
-          </div>
+          <span>|</span>
 
-          <div className="footer-column">
-            <h3>Legal</h3>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Cookies</a>
-          </div>
+          <a href="/">Contact Us</a>
+
+          <span>|</span>
+
+          <a href="/">Terms & Conditions</a>
+
+        </div>
+
+        <div className="footer-line">
+
+          <span>© 2026 PriceRadar</span>
 
         </div>
 
       </div>
 
-      <div className="footer-bottom">
-        <p>© 2026 PriceRadar. All Rights Reserved.</p>
+      {/* Right */}
+
+      <div className="footer-right">
+
+        <a href="/">
+          <FiLinkedin />
+        </a>
+
+        <a href="/">
+          <FiInstagram />
+        </a>
+
+        <a href="/">
+          <FiGithub />
+        </a>
+
+        <a href="mailto:yourmail@gmail.com">
+          <FiMail />
+        </a>
+
       </div>
 
     </footer>
+  );
+};
 
-  )
-}
-
-export default Footer
-
+export default Footer;

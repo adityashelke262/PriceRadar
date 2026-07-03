@@ -24,9 +24,19 @@ export const products = [
 
     image:iphone17,
 
+    images: [
+    iphone17,
+    iphone17,
+    iphone17,
+    iphone17
+    ],
+
     rating:4.8,
 
     reviews:2543,
+
+    stock: "In Stock",
+discount: "10% OFF",
 
 
     specifications:{
@@ -72,11 +82,21 @@ export const products = [
 
     category:"Smartphone",
 
-    image:iphone17pro,
+    image: iphone17pro,
+
+images:[
+    iphone17pro,
+    iphone17pro,
+    iphone17pro,
+    iphone17pro
+],
 
     rating:4.9,
 
     reviews:1942,
+
+    stock: "In Stock",
+discount: "10% OFF",
 
 
     specifications:{
@@ -94,12 +114,12 @@ export const products = [
         {
             platform:"Amazon",
             price:129999,
-            link:"#"
+            link:"https://amzn.in/d/0eaVsAlW"
         },
         {
             platform:"Flipkart",
             price:119999,
-            link:"#"
+            link:"https://dl.flipkart.com/dl/apple-iphone-17-pro-cosmic-orange-256-gb/p/itm76fe37ca9ea8c?pid=MOBHFN6YR8HF5BQ9&lid=LSTMOBHFN6YR8HF5BQ9RBYDOE&_refId=&_appId=CL"
         }
     ],
 
@@ -119,10 +139,19 @@ export const products = [
 
     image:s26,
 
+    images:[
+    s26,
+    s26,
+    s26,
+    s26
+],
+
     rating:4.7,
 
     reviews:1710,
 
+    stock: "In Stock",
+discount: "10% OFF",
 
     specifications:{
         display:"6.4-inch Dynamic AMOLED 2X",
@@ -168,6 +197,8 @@ export const products = [
 
     reviews:1482,
 
+    stock: "In Stock",
+discount: "10% OFF",
 
     specifications:{
         display:"6.9-inch Dynamic AMOLED 2X",
@@ -209,9 +240,19 @@ export const products = [
 
     image:nothing4a,
 
+    images:[
+    nothing4a,
+    nothing4a,
+    nothing4a,
+    nothing4a
+],
+
     rating:4.6,
 
     reviews:1128,
+
+    stock: "In Stock",
+discount: "10% OFF",
 
 
     specifications:{
@@ -254,9 +295,19 @@ export const products = [
 
     image:nothing4apro,
 
+    images:[
+    nothing4apro,
+    nothing4apro,
+    nothing4apro,
+    nothing4apro
+],
+
     rating:4.7,
 
     reviews:954,
+
+    stock: "In Stock",
+discount: "10% OFF",
 
 
     specifications:{
@@ -299,9 +350,19 @@ export const products = [
 
     image:macbookm4,
 
+    images:[
+    macbookm4,
+    macbookm4,
+    macbookm4,
+    macbookm4
+],
+
     rating:4.9,
 
     reviews:1486,
+
+    stock: "In Stock",
+discount: "5% OFF",
 
 
     specifications:{
@@ -344,9 +405,19 @@ export const products = [
 
     image:macbookm4pro,
 
+    images:[
+    macbookm4pro,
+    macbookm4pro,
+    macbookm4pro,
+    macbookm4pro
+],
+
     rating:4.9,
 
     reviews:931,
+
+    stock: "In Stock",
+discount: "5% OFF",
 
 
     specifications:{
@@ -388,6 +459,13 @@ export const products = [
     category:"Laptop",
 
     image:macbookm5,
+
+    images:[
+    macbookm5,
+    macbookm5,
+    macbookm5,
+    macbookm5
+],
 
     rating:4.9,
 
@@ -437,6 +515,13 @@ export const products = [
 
     image:macbookm5pro,
 
+    images:[
+    macbookm5pro,
+    macbookm5pro,
+    macbookm5pro,
+    macbookm5pro
+],
+
     rating:5.0,
 
     reviews:536,
@@ -484,6 +569,13 @@ export const products = [
     category:"Protein",
 
     image:avatar,
+
+    images:[
+    avatar,
+    avatar,
+    avatar,
+    avatar
+],
 
     rating:4.7,
 
@@ -533,6 +625,13 @@ export const products = [
     category:"Protein",
 
     image:bioenzyme,
+
+    images:[
+    bioenzyme,
+    bioenzyme,
+    bioenzyme,
+    bioenzyme
+],
 
     rating:4.6,
 

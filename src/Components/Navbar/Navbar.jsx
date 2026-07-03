@@ -1,31 +1,62 @@
-import React from 'react'
-import logoMode from '../../assets/mode.png'
-import logoSearchwhite from '../../assets/search_white.png'
-import logoSearchblack from '../../assets/search_black.png'
-import logo from '../../assets/a.png'
-import './Navbar.css'
-import { Link } from "react-router-dom";
+import "./Navbar.css";
+import { Link, NavLink } from "react-router-dom";
+import { FiHeart } from "react-icons/fi";
+import { FiArrowRight } from "react-icons/fi";
+import logo from "../../assets/a.png";
+import React, { useEffect, useState } from "react";
 
 const Navbar = () => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   return (
-    <div className='navbar'>
+    <nav className={`navbar ${scrolled ? "navbar-scrolled" : ""}`}>
+      {/* LEFT */}
 
-        <img src={logo} alt=" " className='logo' />
-       
-        <ul>
-          <li><Link to="/">HOME</Link></li>
-          <li><Link to="/search">SEARCH</Link></li>
-          <li><Link to="/compare">COMPARE</Link></li>
-          <li><Link to="/about">ABOUT</Link></li>
-        </ul>
+      <Link to="/" className="navbar-logo">
+        <img src={logo} alt="PriceRadar" />
 
-        <div className="search-box">
-            <input type="text" placeholder="Search..." />
-            <img src={logoSearchblack} alt=" " className='searching' />
+        <div>
+          <h2>PriceRadar</h2>
+
+          <p>Compare • Save • Buy</p>
         </div>
-        <img src={logoMode} alt=" " className='togglemode' />
-    </div>
-  )
-}
+      </Link>
 
-export default Navbar
+      {/* CENTER */}
+
+      <div className="navbar-links">
+        <NavLink to="/">Home</NavLink>
+
+        <NavLink to="/search">Search</NavLink>
+
+        <NavLink to="/compare">Compare</NavLink>
+      </div>
+
+      {/* RIGHT */}
+
+      <div className="navbar-right">
+        <button className="login-btn">
+          Login
+          <FiArrowRight />
+        </button>
+
+        <button className="wishlist-btn">
+          <FiHeart />
+
+          <span>Wishlist</span>
+        </button>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;

@@ -12,7 +12,8 @@
 .why-grid{
     display: grid;
     grid-template-columns: repeat(4,1fr);
-    gap: 25px;
+    column-gap:30px;
+    row-gap:45px;
 }
 
 .why-card{
@@ -24,6 +25,7 @@
     box-shadow: 0 5px 20px rgba(0,0,0,0.05);
 
     transition: 0.3s ease;
+ 
 }
 
 .why-card:hover{

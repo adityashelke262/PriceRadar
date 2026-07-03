@@ -2,7 +2,7 @@
 import Hero from "../../Components/Hero/Hero";
 import PlatformSection from "../../Components/Platform/Platform";
 import WhyChoose from "../../Components/ChooseUs/ChooseUs";
-import FeaturedDeals from "../../Components/HotDeals/HotDeals";
+import FeaturedProducts from "../../Components/FeaturedProducts/FeaturedProducts";
 import Footer from "../../Components/Footer/Footer";
 
 const Home = () => {
@@ -11,7 +11,7 @@ const Home = () => {
       <Hero />
       <PlatformSection />
       <WhyChoose />
-      <FeaturedDeals />
+      <FeaturedProducts />
       <Footer />
     </>
   );

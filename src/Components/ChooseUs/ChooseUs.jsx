@@ -1,5 +1,5 @@
-import React from 'react'
-import './ChooseUs.css'
+import React from "react";
+import "./ChooseUs.css";
 
 const ChooseUs = () => {
   return (
@@ -26,13 +26,33 @@ const ChooseUs = () => {
 
         <div className="why-card">
           <h3>🔔 Price Alerts</h3>
-          <p>Get notified when prices drop.</p>
+          <p>Get notified whenever your favorite products drop in price.</p>
+        </div>
+
+        <div className="why-card">
+          <h3>🛒 Multiple Shopping Platforms</h3>
+          <p>Compare prices from Amazon, Flipkart, Blinkit, Croma and many more.</p>
+        </div>
+
+        <div className="why-card">
+          <h3>⭐ Trusted Product Reviews</h3>
+          <p>View ratings and reviews to make smarter buying decisions.</p>
+        </div>
+
+        <div className="why-card">
+          <h3>🤖 AI Product Summary</h3>
+          <p>Read quick AI-generated highlights before purchasing any product.</p>
+        </div>
+
+        <div className="why-card">
+          <h3>🚀 Direct Buy Links</h3>
+          <p>Purchase instantly from the platform offering the best available price.</p>
         </div>
 
       </div>
 
     </section>
-  )
-}
+  );
+};
 
-export default ChooseUs
+export default ChooseUs;

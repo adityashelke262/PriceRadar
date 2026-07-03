@@ -1,13 +1,55 @@
-import React from 'react'
-import iphoneImage from '../../assets/iphone.png'
-import './Hero.css'
+import React, { useState, useEffect } from "react";
+import "./Hero.css";
+import { useNavigate } from "react-router-dom";
+import { products } from "../../data/products";
+
 
 const Hero = () => {
+  const navigate = useNavigate();
+
+  const [search, setSearch] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
+
+  // Featured products for hero card
+  const heroProducts = products.filter((product) => product.featured);
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const currentProduct = heroProducts[currentIndex];
+
+  // Auto change hero product
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % heroProducts.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [heroProducts.length]);
+
+  // Suggestions
+  const suggestions = products
+    .filter((product) => {
+      const value = search.toLowerCase();
+
+      return (
+        product.name.toLowerCase().includes(value) ||
+        product.brand.toLowerCase().includes(value)
+      );
+    })
+    .slice(0, 5);
+
+  // Price calculations
+  const prices = currentProduct.prices.map((store) => store.price);
+
+  const lowest = Math.min(...prices);
+
+  const highest = Math.max(...prices);
+
   return (
     <section className="hero">
+      {/* LEFT */}
 
       <div className="hero-left">
-
         <h1>
           Never Overpay Again.
           <br />
@@ -15,49 +57,102 @@ const Hero = () => {
         </h1>
 
         <p>
-          Search any product or paste a shopping link.
-          Compare prices from Amazon, Flipkart, Blinkit,
-          Zepto, BigBasket and more in seconds.
+          Search any product or compare prices across Amazon,
+          Flipkart, Blinkit, Zepto, BigBasket and many more
+          in seconds.
         </p>
 
-        <div className="hero-search">
-          <input
-            type="text"
-            placeholder="Search products, brands and more..."
-          />
-          <button>Compare Prices</button>
+        <div className="hero-search-container">
+
+          <div className="hero-search">
+
+            
+
+            <input
+              type="text"
+              value={search}
+              placeholder="Search products, brands and more..."
+              onFocus={() => setShowSuggestions(true)}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setShowSuggestions(true);
+              }}
+            />
+
+            <button
+  onClick={() => {
+    document
+      .getElementById("featured-products")
+      ?.scrollIntoView({
+        behavior: "smooth",
+      });
+  }}
+>
+  View All Products
+</button>
+
+          </div>
+
+          {showSuggestions &&
+  search &&
+  suggestions.length > 0 && (
+    <div className="hero-suggestions">
+      {suggestions.map((product) => (
+        <div
+  key={product.id}
+  className="hero-suggestion"
+  onClick={() => {
+    setSearch("");
+    setShowSuggestions(false);
+    navigate(`/product/${product.id}`);
+  }}
+>
+  {product.name}
+</div>
+      ))}
+    </div>
+)}
+
         </div>
 
       </div>
 
+      {/* RIGHT */}
+
       <div className="hero-right">
 
         <div className="comparison-card">
-        <img src={iphoneImage} alt="" className="product-image" />
-          <h2>iPhone 15 Pro</h2>
 
-          <div className="price-row">
-            <span>Amazon</span>
-            <span>₹79,999</span>
-          </div>
+          <img
+            src={currentProduct.image}
+            alt={currentProduct.name}
+            className="product-image"
+          />
 
-          <div className="price-row best">
-            <span>Flipkart</span>
-            <span>₹77,999 ✓</span>
-          </div>
+          <h2>{currentProduct.name}</h2>
 
-          <div className="price-row">
-            <span>Blinkit</span>
-            <span>₹78,499</span>
-          </div>
+          {currentProduct.prices.map((store) => (
 
-          <div className="price-row">
-            <span>BigBasket</span>
-            <span>₹79,499</span>
-          </div>
+            <div
+              key={store.platform}
+              className={`price-row ${
+                store.price === lowest ? "best" : ""
+              }`}
+            >
+
+              <span>{store.platform}</span>
+
+              <span>
+                ₹{store.price.toLocaleString()}
+                {store.price === lowest && " ✓"}
+              </span>
+
+            </div>
+
+          ))}
 
           <div className="saving">
-            You Save ₹2,000
+            You Save ₹{(highest - lowest).toLocaleString()}
           </div>
 
         </div>
@@ -65,7 +160,7 @@ const Hero = () => {
       </div>
 
     </section>
-  )
-}
+  );
+};
 
-export default Hero
+export default Hero;
