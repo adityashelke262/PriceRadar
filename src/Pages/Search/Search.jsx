@@ -127,7 +127,17 @@ const Search = () => {
                         }, 150);
                       }}
                     >
-                      🔍 {product.name}
+                      <div className="suggestion-item">
+
+<div>
+
+<strong>{product.name}</strong>
+
+<p>{product.brand}</p>
+
+</div>
+
+</div>
                     </div>
                   ))}
                 </div>
