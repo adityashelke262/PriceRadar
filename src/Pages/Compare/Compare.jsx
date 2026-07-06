@@ -9,6 +9,10 @@ const Compare = () => {
   const [searchParams] = useSearchParams();
   const selectedId = Number(searchParams.get("product1"));
 
+  const [aiResult, setAiResult] = useState(null);
+
+  const [loadingAI, setLoadingAI] = useState(false);
+
   const navigate = useNavigate();
   const [category, setCategory] = useState("Smartphone");
 
@@ -39,6 +43,50 @@ const Compare = () => {
       setProduct2(filteredProducts[1]);
     }
   }, [category, selectedId]);
+
+  useEffect(() => {
+    if (!product1 || !product2) return;
+
+    const fetchComparison = async () => {
+      setLoadingAI(true);
+
+      try {
+        console.log({
+          product1,
+          product2,
+        });
+
+        const response = await fetch("http://127.0.0.1:5000/api/compare", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            product1,
+            product2,
+          }),
+        });
+
+        const data = await response.json();
+        console.log("AI Compare Response:", data);
+
+        console.log("AI Compare:", data);
+
+        if (!response.ok) {
+          console.error(data.error);
+          return;
+        }
+
+        setAiResult(data);
+      } catch (err) {
+        console.error(err);
+      }
+
+      setLoadingAI(false);
+    };
+
+    fetchComparison();
+  }, [product1, product2]);
 
   const cheapestStore1 = product1.prices.reduce((cheapest, current) => {
     return current.price < cheapest.price ? current : cheapest;
@@ -194,128 +242,186 @@ const Compare = () => {
       {/* Comparison Table */}
 
       <div className="comparison-section">
+        <h2>Detailed Comparison</h2>
 
-<h2>Detailed Comparison</h2>
+        <div className="table-wrapper">
+          <table className="comparison-table">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>{product1.name}</th>
+                <th>{product2.name}</th>
+              </tr>
+            </thead>
 
-<div className="table-wrapper">
+            <tbody>
+              <tr>
+                <td>Display</td>
+                <td>{product1.specifications.display}</td>
+                <td>{product2.specifications.display}</td>
+              </tr>
 
-<table className="comparison-table">
+              <tr>
+                <td>Processor</td>
+                <td>{product1.specifications.processor}</td>
+                <td>{product2.specifications.processor}</td>
+              </tr>
 
-          <thead>
-            <tr>
-              <th>Feature</th>
-              <th>{product1.name}</th>
-              <th>{product2.name}</th>
-            </tr>
-          </thead>
+              <tr>
+                <td>RAM</td>
+                <td>{product1.specifications.ram}</td>
+                <td>{product2.specifications.ram}</td>
+              </tr>
 
-          <tbody>
-            <tr>
-              <td>Display</td>
-              <td>{product1.specifications.display}</td>
-              <td>{product2.specifications.display}</td>
-            </tr>
+              <tr>
+                <td>Storage</td>
+                <td>{product1.specifications.storage}</td>
+                <td>{product2.specifications.storage}</td>
+              </tr>
 
-            <tr>
-              <td>Processor</td>
-              <td>{product1.specifications.processor}</td>
-              <td>{product2.specifications.processor}</td>
-            </tr>
+              <tr>
+                <td>Battery</td>
+                <td>{product1.specifications.battery}</td>
+                <td>{product2.specifications.battery}</td>
+              </tr>
 
-            <tr>
-              <td>RAM</td>
-              <td>{product1.specifications.ram}</td>
-              <td>{product2.specifications.ram}</td>
-            </tr>
+              <tr>
+                <td>Camera</td>
+                <td>{product1.specifications.camera}</td>
+                <td>{product2.specifications.camera}</td>
+              </tr>
 
-            <tr>
-              <td>Storage</td>
-              <td>{product1.specifications.storage}</td>
-              <td>{product2.specifications.storage}</td>
-            </tr>
+              <tr>
+                <td>Operating System</td>
+                <td>{product1.specifications.os}</td>
+                <td>{product2.specifications.os}</td>
+              </tr>
 
-            <tr>
-              <td>Battery</td>
-              <td>{product1.specifications.battery}</td>
-              <td>{product2.specifications.battery}</td>
-            </tr>
-
-            <tr>
-              <td>Camera</td>
-              <td>{product1.specifications.camera}</td>
-              <td>{product2.specifications.camera}</td>
-            </tr>
-
-            <tr>
-              <td>Operating System</td>
-              <td>{product1.specifications.os}</td>
-              <td>{product2.specifications.os}</td>
-            </tr>
-
-            <tr>
-              <td>Lowest Price</td>
-              <td>₹{cheapestStore1.price.toLocaleString()}</td>
-              <td>₹{cheapestStore2.price.toLocaleString()}</td>
-            </tr>
-          </tbody>
-        </table>
+              <tr>
+                <td>Lowest Price</td>
+                <td>₹{cheapestStore1.price.toLocaleString()}</td>
+                <td>₹{cheapestStore2.price.toLocaleString()}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
-      {/* AI Recommendation */}
+      {/* AI Verdict */}
 
       <div className="ai-section">
         <div className="ai-card">
           <div className="ai-header">
-            <h2>🤖 AI Recommendation</h2>
-
-            <p>
-              Here's our smart comparison based on the specifications and
-              pricing.
-            </p>
+            <h2>🤖 PriceRadar AI Compare</h2>
+            <p>AI-powered comparison between these two products.</p>
           </div>
 
-          <div className="ai-grid">
-            <div className="ai-box">
-              <h3>🏆 Overall Winner</h3>
-              Overall Winner
-              {cheapestStore1.price < cheapestStore2.price
-                ? product1.name
-                : product2.name}
-            </div>
+          {loadingAI ? (
+            <p>Generating AI comparison...</p>
+          ) : aiResult ? (
+            <>
+              {/* Winner */}
 
-            <div className="ai-box">
-              <h3>📸 Best Camera</h3>
+              <div className="winner-card">
+                <h2>🏆 Winner</h2>
 
-              <p>{product1.name}</p>
-            </div>
+                <h3>{aiResult?.winner || "Not Available"}</h3>
 
-            <div className="ai-box">
-              <h3>🔋 Best Battery</h3>
+                <p>{aiResult?.winnerReason || "No reason available."}</p>
+              </div>
 
-              <p>{product2.name}</p>
-            </div>
+              <div className="confidence">
+                <span>🤖 AI Confidence</span>
 
-            <div className="ai-box">
-              <h3>🎮 Best Gaming</h3>
+                <div className="confidence-bar">
+                  <div
+                    className="confidence-fill"
+                    style={{ width: "94%" }}
+                  ></div>
+                </div>
 
-              <p>{product2.name}</p>
-            </div>
-          </div>
+                <p>94% Confidence</p>
+              </div>
 
-          <div className="recommendation">
-            <h3>Recommendation</h3>
+              {/* Scores */}
 
-            <p>
-              If photography and the Apple ecosystem matter most, choose the{" "}
-              <strong>{product1.name}</strong>.
-              <br />
-              <br />
-              If you're looking for excellent battery life, gaming performance
-              and better value for money, choose the{" "}
-              <strong>{product2.name}</strong>.
-            </p>
-          </div>
+              <div className="score-grid">
+                <div className="score-box">
+                  <h4>{product1.name}</h4>
+
+                  <span>{aiResult?.scores?.product1 ?? "--"}/10</span>
+                </div>
+
+                <div className="score-box">
+                  <h4>{product2.name}</h4>
+
+                  <span>{aiResult?.scores?.product2 ?? "--"}/10</span>
+                </div>
+              </div>
+
+              {/* Comparison */}
+
+              <div className="comparison-grid">
+                <div className="compare-point">
+                  <strong>⚡ Performance</strong>
+
+                  <p>{aiResult?.comparison?.performance || "--"}</p>
+                </div>
+
+                <div className="compare-point">
+                  <strong>📸 Camera</strong>
+
+                  <p>{aiResult?.comparison?.camera || "--"}</p>
+                </div>
+
+                <div className="compare-point">
+                  <strong>🔋 Battery</strong>
+
+                  <p>{aiResult?.comparison?.battery || "--"}</p>
+                </div>
+
+                <div className="compare-point">
+                  <strong>🖥 Display</strong>
+
+                  <p>{aiResult?.comparison?.display || "--"}</p>
+                </div>
+
+                <div className="compare-point">
+                  <strong>💰 Value</strong>
+
+                  <p>{aiResult?.comparison?.value || "--"}</p>
+                </div>
+              </div>
+
+              {/* Best For */}
+
+              <div className="best-for">
+                <h3>🎯 Best For</h3>
+
+                <p>
+                  <strong>{product1.name}:</strong>{" "}
+                  {aiResult?.bestFor?.product1 || "--"}
+                </p>
+
+                <p>
+                  <strong>{product2.name}:</strong>{" "}
+                  {aiResult?.bestFor?.product2 || "--"}
+                </p>
+              </div>
+
+              {/* Recommendation */}
+
+              <div className="recommendation">
+                <h3>📝 Recommendation</h3>
+
+                <p>
+                  {aiResult?.recommendation || "No recommendation available."}
+                </p>
+              </div>
+            </>
+          ) : (
+            <p>Unable to generate AI comparison.</p>
+          )}
         </div>
       </div>
     </section>
