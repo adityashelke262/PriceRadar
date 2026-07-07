@@ -2,10 +2,9 @@ from flask import Blueprint, request, jsonify
 import traceback
 
 from ai.gemini import (
-    generate_product_summary,
+    generate_product_ai,
     compare_products,
-    chat_with_product,
-    recommend_products
+    chat_with_product
 )
 
 
@@ -15,29 +14,31 @@ ai_bp = Blueprint(
 )
 
 
-@ai_bp.route("/product-summary", methods=["POST"])
-def product_summary():
-
+@ai_bp.route("/product-ai", methods=["POST"])
+def product_ai():
     try:
         data = request.json
-        result = generate_product_summary(data)
+
+        product = data["product"]
+        products = data["products"]
+
+        result = generate_product_ai(product, products)
+
         return jsonify(result)
 
-    except Exception as e:
+    except Exception:
 
-        print(e)
-
-        # Temporary fallback while Gemini quota is exhausted
         return jsonify({
-            "summary": "This is a premium flagship device with excellent performance, display and cameras. It is ideal for users looking for a high-end smartphone.",
+            "summary": "Excellent flagship device.",
+            "overallScore": 9.3,
             "pros": [
                 "Excellent performance",
-                "Premium display",
-                "Great camera"
+                "Great camera",
+                "Premium display"
             ],
             "cons": [
                 "Expensive",
-                "Average battery compared to competitors"
+                "Average charging speed"
             ],
             "bestFor": [
                 "Gaming",
@@ -49,11 +50,67 @@ def product_summary():
                 "camera": 9,
                 "battery": 8,
                 "display": 10,
-                "value": 7
+                "value": 8
             },
-            "overallScore": 9,
-            "verdict": "Highly Recommended"
+            "verdict": "Highly Recommended",
+            "recommendations": [
+                {
+                    "name": "Samsung Galaxy S25 Ultra",
+                    "reason": "Better camera zoom.",
+                    "score": 9.2
+                },
+                {
+                    "name": "Google Pixel 10 Pro",
+                    "reason": "Excellent AI features.",
+                    "score": 9.1
+                },
+                {
+                    "name": "OnePlus 13",
+                    "reason": "Excellent value for money.",
+                    "score": 8.9
+                }
+            ]
         }), 200
+
+# @ai_bp.route("/product-summary", methods=["POST"])
+# def product_summary():
+
+#     try:
+#         data = request.json
+#         result = generate_product_summary(data)
+#         return jsonify(result)
+
+#     except Exception as e:
+
+#         print(e)
+
+#         # Temporary fallback while Gemini quota is exhausted
+#         return jsonify({
+#             "summary": "This is a premium flagship device with excellent performance, display and cameras. It is ideal for users looking for a high-end smartphone.",
+#             "pros": [
+#                 "Excellent performance",
+#                 "Premium display",
+#                 "Great camera"
+#             ],
+#             "cons": [
+#                 "Expensive",
+#                 "Average battery compared to competitors"
+#             ],
+#             "bestFor": [
+#                 "Gaming",
+#                 "Photography",
+#                 "Power Users"
+#             ],
+#             "scores": {
+#                 "performance": 10,
+#                 "camera": 9,
+#                 "battery": 8,
+#                 "display": 10,
+#                 "value": 7
+#             },
+#             "overallScore": 9,
+#             "verdict": "Highly Recommended"
+#         }), 200
 
 @ai_bp.route("/compare", methods=["POST"])
 def compare():
@@ -79,8 +136,8 @@ def compare():
             "recommendation": "Choose Product 1 if you want the best overall experience.",
             "bestFor": "Power Users",
             "scores": {
-                "product1": 92,
-                "product2": 88
+                "product1": 9.2,
+                "product2": 8.8
             }
         }), 200
 
@@ -113,30 +170,26 @@ def chat():
         }), 200
     
 
-@ai_bp.route("/recommend", methods=["POST"])
-def recommend():
+# @ai_bp.route("/recommend", methods=["POST"])
+# def recommend():
 
-    try:
+#     try:
 
-        data = request.json
+#         data = request.json
 
-        product = data["product"]
+#         product = data["product"]
 
-        result = recommend_products(product)
+#         products = data["products"]
 
-        return jsonify(result)
+#         result = recommend_products(
+#             product,
+#             products
+#         )
 
-    except Exception :
+#         return jsonify(result)
 
-        return jsonify({
-            "recommendations": [
-                {
-                    "name": "OnePlus 15",
-                    "reason": "Better battery and value."
-                },
-                {
-                    "name": "Pixel 10",
-                    "reason": "Superior camera performance."
-                }
-            ]
-        }), 200
+#     except Exception as e:
+
+#         return jsonify({
+#             "error": str(e)
+#         }),500

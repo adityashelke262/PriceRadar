@@ -6,10 +6,9 @@ from google import genai
 from dotenv import load_dotenv
 
 from ai.prompts import (
-    SUMMARY_PROMPT,
+    PRODUCT_AI_PROMPT,
     COMPARE_PROMPT,
     CHAT_PROMPT,
-    RECOMMEND_PROMPT
 )
 
 load_dotenv()
@@ -19,11 +18,23 @@ client = genai.Client(
 )
 
 
-def generate_product_summary(product):
+def generate_product_ai(product, products):
 
-    prompt = SUMMARY_PROMPT.replace(
+    data = {
+        "product": product,
+        "products": products
+    }
+
+    prompt = PRODUCT_AI_PROMPT
+
+    prompt = prompt.replace(
         "PRODUCT_DATA",
         json.dumps(product, indent=2)
+    )
+
+    prompt = prompt.replace(
+        "AVAILABLE_PRODUCTS_DATA",
+        json.dumps(products, indent=2)
     )
 
     response = client.models.generate_content(
@@ -39,6 +50,27 @@ def generate_product_summary(product):
     text = re.sub(r",(\s*[\]}])", r"\1", text)
 
     return json.loads(text)
+
+# def generate_product_summary(product):
+
+#     prompt = SUMMARY_PROMPT.replace(
+#         "PRODUCT_DATA",
+#         json.dumps(product, indent=2)
+#     )
+
+#     response = client.models.generate_content(
+#         model="gemini-2.5-flash",
+#         contents=prompt
+#     )
+
+#     text = response.text.strip()
+
+#     text = text.replace("```json", "")
+#     text = text.replace("```", "").strip()
+
+#     text = re.sub(r",(\s*[\]}])", r"\1", text)
+
+#     return json.loads(text)
 
 
 def compare_products(product1, product2):
@@ -88,6 +120,35 @@ def chat_with_product(product, question):
     return response.text.strip()
 
 
+# def recommend_products(product, products):
 
-def recommend_products(product):
-    pass
+#     data = {
+#         "product": product,
+#         "products": products
+#     }
+
+#     prompt = RECOMMEND_PROMPT
+
+#     prompt = prompt.replace(
+#         "PRODUCT_DATA",
+#         json.dumps(product, indent=2)
+#     )
+
+#     prompt = prompt.replace(
+#         "AVAILABLE_PRODUCTS_DATA",
+#         json.dumps(products, indent=2)
+#     )
+
+#     response = client.models.generate_content(
+#         model="gemini-2.5-flash",
+#         contents=prompt
+#     )
+
+#     text = response.text.strip()
+
+#     text = text.replace("```json", "")
+#     text = text.replace("```", "").strip()
+
+#     text = re.sub(r",(\s*[\]}])", r"\1", text)
+
+#     return json.loads(text)

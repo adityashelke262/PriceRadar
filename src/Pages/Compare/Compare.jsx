@@ -11,7 +11,9 @@ const Compare = () => {
 
   const [aiResult, setAiResult] = useState(null);
 
-  const [loadingAI, setLoadingAI] = useState(false);
+  const [showAI, setShowAI] = useState(false);
+
+const [loadingAI, setLoadingAI] = useState(false);
 
   const navigate = useNavigate();
   const [category, setCategory] = useState("Smartphone");
@@ -44,49 +46,66 @@ const Compare = () => {
     }
   }, [category, selectedId]);
 
-  useEffect(() => {
+  const generateAIReport = async () => {
+
     if (!product1 || !product2) return;
 
-    const fetchComparison = async () => {
-      setLoadingAI(true);
+    setLoadingAI(true);
 
-      try {
-        console.log({
-          product1,
-          product2,
-        });
+    const cacheKey = `compare_${product1.id}_${product2.id}`;
 
-        const response = await fetch("http://127.0.0.1:5000/api/compare", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            product1,
-            product2,
-          }),
-        });
+    const cached = localStorage.getItem(cacheKey);
+
+    if (cached) {
+
+        setAiResult(JSON.parse(cached));
+
+        setShowAI(true);
+
+        setLoadingAI(false);
+
+        return;
+
+    }
+
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:5000/api/compare",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    product1,
+                    product2,
+                }),
+            }
+        );
 
         const data = await response.json();
-        console.log("AI Compare Response:", data);
 
-        console.log("AI Compare:", data);
-
-        if (!response.ok) {
-          console.error(data.error);
-          return;
-        }
+        localStorage.setItem(
+            cacheKey,
+            JSON.stringify(data)
+        );
 
         setAiResult(data);
-      } catch (err) {
+
+        setShowAI(true);
+
+    } catch (err) {
+
         console.error(err);
-      }
 
-      setLoadingAI(false);
-    };
+    }
 
-    fetchComparison();
-  }, [product1, product2]);
+    setLoadingAI(false);
+
+};
+
+
 
   const cheapestStore1 = product1.prices.reduce((cheapest, current) => {
     return current.price < cheapest.price ? current : cheapest;
@@ -310,6 +329,32 @@ const Compare = () => {
       {/* AI Verdict */}
 
       <div className="ai-section">
+        {
+
+!showAI ?
+
+<div className="generate-ai">
+
+<p>
+
+Generate AI insights and recommendations.
+
+</p>
+<button
+    className="generate-ai-btn"
+    onClick={generateAIReport}
+    disabled={loadingAI}
+>
+
+    {loadingAI
+        ? "Generating..."
+        : "✨ Generate AI Report"}
+
+</button>
+
+</div>
+
+:
         <div className="ai-card">
           <div className="ai-header">
             <h2>🤖 PriceRadar AI Compare</h2>
@@ -423,6 +468,7 @@ const Compare = () => {
             <p>Unable to generate AI comparison.</p>
           )}
         </div>
+}
       </div>
     </section>
   );

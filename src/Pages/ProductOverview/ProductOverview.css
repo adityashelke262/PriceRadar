@@ -1038,3 +1038,184 @@ border-radius:10px;
 cursor:pointer;
 
 }
+
+.ai-recommendations{
+
+margin:60px 0;
+
+}
+
+.recommend-card{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:22px;
+
+border:1px solid #dbeafe;
+
+background:#f8fbff;
+
+border-radius:16px;
+
+margin-bottom:18px;
+
+transition:.3s;
+
+}
+
+.recommend-card:hover{
+
+transform:translateY(-4px);
+
+box-shadow:0 10px 30px rgba(37,99,235,.12);
+
+}
+
+.recommend-card span{
+
+font-size:22px;
+
+font-weight:700;
+
+color:#2563eb;
+
+}
+
+.clear-cache{
+
+margin-top:15px;
+
+background:#111827;
+
+color:white;
+
+padding:10px 18px;
+
+border:none;
+
+border-radius:10px;
+
+cursor:pointer;
+
+}
+
+
+.generate-ai{
+
+    text-align:center;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    background:linear-gradient(
+        135deg,
+        #0f172a,
+        #1e293b
+    );
+
+    color:white;
+
+    margin-top:20px;
+
+}
+
+.generate-ai p{
+
+    font-size:16px;
+
+    color:#d1d5db;
+
+    margin-bottom:20px;
+
+}
+
+.generate-ai-btn{
+
+    background:linear-gradient(
+        90deg,
+        #4f46e5,
+        #7c3aed
+    );
+
+    color:white;
+
+    border:none;
+
+    padding:14px 34px;
+
+    border-radius:14px;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    box-shadow:0 10px 25px rgba(124,58,237,.35);
+
+}
+
+.generate-ai-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 15px 35px rgba(124,58,237,.5);
+
+}
+
+.generate-ai-btn:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+    transform:none;
+
+}
+
+.assistant-start{
+
+    display:flex;
+
+    justify-content:center;
+
+    margin:30px 0;
+
+}
+
+.assistant-start button{
+
+    background:#111827;
+
+    color:white;
+
+    border:none;
+
+    padding:14px 30px;
+
+    border-radius:14px;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.assistant-start button:hover{
+
+    background:#4f46e5;
+
+    transform:translateY(-2px);
+
+}

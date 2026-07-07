@@ -16,34 +16,140 @@ import { FiShare2 } from "react-icons/fi";
 const ProductOverview = () => {
   const platformLogos = {
     Amazon: amazonLogo,
-
     Flipkart: flipkartLogo,
-
     Blinkit: blinkitLogo,
-
     Croma: cromaLogo,
-
     "Reliance Digital": relianceLogo,
-
     Zepto: zeptoLogo,
-
     BigBasket: bigbasketLogo,
-
     Myntra: myntraLogo,
   };
-  const [liked, setLiked] = useState(false);
-  const { id } = useParams();
-  const navigate = useNavigate();
 
-  const product = products.find((item) => item.id === Number(id));
-  const [aiSummary, setAiSummary] = useState(null);
-  const [loadingAI, setLoadingAI] = useState(false);
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  const [liked, setLiked] = useState(false);
+
   const [question, setQuestion] = useState("");
   const [messages, setMessages] = useState([]);
+
   const [chatLoading, setChatLoading] = useState(false);
+
+  const [loadingAI, setLoadingAI] = useState(false);
+
+  const [showAI, setShowAI] = useState(false);
+
+  const [showAssistant, setShowAssistant] = useState(false);
+
+  const [productAI, setProductAI] = useState(null);
+  const [showViewer, setShowViewer] = useState(false);
+
+  const [selectedImage, setSelectedImage] = useState("");
+
+  const [recommendations, setRecommendations] = useState([]);
+
+  const product = products.find((item) => item.id === Number(id));
+
+  if (!product) {
+    return <h1>Product Not Found</h1>;
+  }
+
+  const relatedProducts = products
+    .filter(
+      (item) => item.category === product.category && item.id !== product.id,
+    )
+    .slice(0, 4);
+
+  const cheapestStore = product.prices.reduce((lowest, current) =>
+    current.price < lowest.price ? current : lowest,
+  );
+
+  const galleryImages = product.images || [
+    product.image,
+    product.image,
+    product.image,
+    product.image,
+  ];
+
+  useEffect(() => {
+    if (!selectedImage && galleryImages.length > 0) {
+      setSelectedImage(galleryImages[0]);
+    }
+  }, [galleryImages, selectedImage]);
+
+  const reportCacheKey = `productAI_${product.id}`;
+
+  const generateAIReport = async () => {
+    const cached = localStorage.getItem(reportCacheKey);
+
+    if (cached) {
+      const data = JSON.parse(cached);
+
+      setProductAI(data);
+
+      setRecommendations(data.recommendations || []);
+
+      setShowAI(true);
+
+      return;
+    }
+
+    setLoadingAI(true);
+
+    try {
+      const response = await fetch("http://127.0.0.1:5000/api/product-ai", {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          product,
+          products: relatedProducts,
+        }),
+      });
+
+      const data = await response.json();
+
+      localStorage.setItem(reportCacheKey, JSON.stringify(data));
+
+      setProductAI(data);
+
+      setRecommendations(data.recommendations || []);
+
+      setShowAI(true);
+    } catch (err) {
+      console.log(err);
+    }
+
+    setLoadingAI(false);
+  };
 
   const askAI = async () => {
     if (!question.trim()) return;
+
+    const chatCacheKey = `chat_${product.id}_${question}`;
+
+    const cached = localStorage.getItem(chatCacheKey);
+
+    if (cached) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          type: "user",
+          text: question,
+        },
+        {
+          type: "ai",
+          text: cached,
+        },
+      ]);
+
+      setQuestion("");
+
+      return;
+    }
 
     setChatLoading(true);
 
@@ -63,6 +169,8 @@ const ProductOverview = () => {
 
       const data = await response.json();
 
+      localStorage.setItem(chatCacheKey, data.answer);
+
       setMessages((prev) => [
         ...prev,
         {
@@ -77,75 +185,11 @@ const ProductOverview = () => {
 
       setQuestion("");
     } catch (err) {
-      console.error(err);
+      console.log(err);
     }
 
     setChatLoading(false);
   };
-
-  console.log(aiSummary);
-
-  useEffect(() => {
-    console.log("useEffect started");
-
-    if (!product) return;
-
-    const fetchAISummary = async () => {
-      console.log("Fetching AI...");
-
-      setLoadingAI(true);
-
-      try {
-        const response = await fetch(
-          "http://127.0.0.1:5000/api/product-summary",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(product),
-          },
-        );
-
-        console.log("Response received:", response);
-
-        const data = await response.json();
-
-        console.log("AI Data:", data);
-
-        setAiSummary(data);
-      } catch (err) {
-        console.error("Fetch Error:", err);
-      }
-
-      setLoadingAI(false);
-    };
-
-    fetchAISummary();
-  }, [product]);
-  if (!product) {
-    return <h1>Product Not Found</h1>;
-  }
-
-  const cheapestStore = product.prices.reduce((lowest, current) =>
-    current.price < lowest.price ? current : lowest,
-  );
-
-  const galleryImages = product.images || [
-    product.image,
-    product.image,
-    product.image,
-    product.image,
-  ];
-
-  const [selectedImage, setSelectedImage] = useState(product.images[0]);
-  const [showViewer, setShowViewer] = useState(false);
-
-  const relatedProducts = products
-    .filter(
-      (item) => item.category === product.category && item.id !== product.id,
-    )
-    .slice(0, 4);
 
   return (
     <section className="product-overview">
@@ -377,194 +421,272 @@ const ProductOverview = () => {
           <div className="ai-recommendation">
             <h2>🤖 PriceRadar AI</h2>
 
-            <div className="ai-card">
-              <div className="ai-rating">
-                <h1>
-                  {loadingAI ? "--" : aiSummary?.overallScore || "--"}
-                  /10
-                </h1>
+            {!showAI ? (
+              <div className="generate-ai">
+                <p>
+                  Generate AI-powered insights, scores and recommendations for
+                  this product.
+                </p>
 
-                <span>Overall AI Score</span>
+                <button
+                  className="generate-ai-btn"
+                  disabled={loadingAI}
+                  onClick={generateAIReport}
+                >
+                  {loadingAI ? "Generating..." : "✨ Generate AI Report"}
+                </button>
               </div>
+            ) : (
+              <>
+                <div className="ai-card">
+                  <div className="summary">
+                    <h3>🤖 AI Summary</h3>
 
-              <div className="score-grid">
-                <div className="score-card">
-                  <h4>⚡ Performance</h4>
-
-                  <span>
-                    {loadingAI ? "--" : aiSummary?.scores?.performance}/10
-                  </span>
-                </div>
-
-                <div className="score-card">
-                  <h4>📷 Camera</h4>
-
-                  <span>{loadingAI ? "--" : aiSummary?.scores?.camera}/10</span>
-                </div>
-
-                <div className="score-card">
-                  <h4>🔋 Battery</h4>
-
-                  <span>
-                    {loadingAI ? "--" : aiSummary?.scores?.battery}/10
-                  </span>
-                </div>
-
-                <div className="score-card">
-                  <h4>🖥 Display</h4>
-
-                  <span>
-                    {loadingAI ? "--" : aiSummary?.scores?.display}/10
-                  </span>
-                </div>
-
-                <div className="score-card">
-                  <h4>💰 Value</h4>
-
-                  <span>{loadingAI ? "--" : aiSummary?.scores?.value}/10</span>
-                </div>
-              </div>
-
-              <div className="pros-cons">
-                <div className="pros">
-                  <h3>👍 Pros</h3>
-
-                  <ul>
-                    {loadingAI ? (
-                      <li>Loading...</li>
-                    ) : (
-                      aiSummary?.pros?.map((pro, index) => (
-                        <li key={index}>{pro}</li>
-                      ))
-                    )}
-                  </ul>
-                </div>
-
-                <div className="cons">
-                  <h3>👎 Cons</h3>
-
-                  <ul>
-                    {loadingAI ? (
-                      <li>Loading...</li>
-                    ) : (
-                      aiSummary?.cons?.map((con, index) => (
-                        <li key={index}>{con}</li>
-                      ))
-                    )}
-                  </ul>
-                </div>
-                <div className="verdict">
-                  <h3>✅ AI Verdict</h3>
-
-                  <p>
-                    {loadingAI ? "Generating verdict..." : aiSummary?.verdict}
-                  </p>
-                </div>
-              </div>
-              <div className="assistant-section">
-                <div className="assistant-card">
-                  <h2>🤖 PriceRadar AI Assistant</h2>
-
-                  <p>Ask anything about this product.</p>
-
-                  <div className="assistant-input">
-                    <input
-                      value={question}
-                      onChange={(e) => setQuestion(e.target.value)}
-                      placeholder="Example: Is this good for gaming?"
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          askAI();
-                        }
-                      }}
-                    />
-
-                    <button onClick={askAI}>Ask</button>
+                    <p>
+                      {loadingAI
+                        ? "Generating AI Summary..."
+                        : productAI?.summary}
+                    </p>
                   </div>
 
-                  <div className="suggested-questions">
-                    <button
-                      onClick={() => setQuestion("Is this good for gaming?")}
-                    >
-                      🎮 Gaming
-                    </button>
+                  <div className="best-for">
+                    <h3>🎯 Best For</h3>
 
-                    <button onClick={() => setQuestion("Should I buy this?")}>
-                      💰 Worth Buying?
-                    </button>
-
-                    <button
-                      onClick={() => setQuestion("Is this good for students?")}
-                    >
-                      🎓 Students
-                    </button>
-
-                    <button
-                      onClick={() => setQuestion("Is battery backup good?")}
-                    >
-                      🔋 Battery
-                    </button>
+                    <div className="best-tags">
+                      {productAI?.bestFor?.length ? (
+                        productAI?.bestFor?.map((item, index) => (
+                          <span key={index} className="best-tag">
+                            {item}
+                          </span>
+                        ))
+                      ) : (
+                        <span>No data</span>
+                      )}
+                    </div>
                   </div>
 
-                  <button className="new-chat" onClick={() => setMessages([])}>
-                    🗑 New Chat
-                  </button>
+                  <div className="ai-rating">
+                    <h1>
+                      {loadingAI ? "--" : productAI?.overallScore || "--"}/10
+                    </h1>
 
-                  {chatLoading && (
-                    <p className="thinking">🤖 PriceRadar AI is thinking...</p>
-                  )}
+                    <span>Overall AI Score</span>
+                  </div>
 
-                  <div className="chat-history">
-                    {messages.map((msg, index) => (
-                      <div
-                        key={index}
-                        className={
-                          msg.type === "user" ? "user-message" : "ai-message"
-                        }
-                      >
-                        <strong>
-                          {msg.type === "user" ? "👤 You" : "🤖 PriceRadar AI"}
-                        </strong>
+                  <div className="score-grid">
+                    <div className="score-card">
+                      <h4>⚡ Performance</h4>
+                      <span>{productAI?.scores?.performance || "--"}/10</span>
+                    </div>
 
-                        <p>{msg.text}</p>
-                      </div>
-                    ))}
+                    <div className="score-card">
+                      <h4>📷 Camera</h4>
+                      <span>{productAI?.scores?.camera || "--"}/10</span>
+                    </div>
+
+                    <div className="score-card">
+                      <h4>🔋 Battery</h4>
+                      <span>{productAI?.scores?.battery || "--"}/10</span>
+                    </div>
+
+                    <div className="score-card">
+                      <h4>🖥 Display</h4>
+                      <span>{productAI?.scores?.display || "--"}/10</span>
+                    </div>
+
+                    <div className="score-card">
+                      <h4>💰 Value</h4>
+                      <span>{productAI?.scores?.value || "--"}/10</span>
+                    </div>
+                  </div>
+
+                  <div className="pros-cons">
+                    <div className="pros">
+                      <h3>👍 Pros</h3>
+
+                      <ul>
+                        {productAI?.pros?.length ? (
+                          productAI?.pros?.map((pro, index) => (
+                            <li key={index}>{pro}</li>
+                          ))
+                        ) : (
+                          <li>No data</li>
+                        )}
+                      </ul>
+                    </div>
+
+                    <div className="cons">
+                      <h3>👎 Cons</h3>
+
+                      <ul>
+                        {productAI?.cons?.length ? (
+                          productAI?.cons?.map((con, index) => (
+                            <li key={index}>{con}</li>
+                          ))
+                        ) : (
+                          <li>No data</li>
+                        )}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="verdict">
+                    <h3>✅ AI Verdict</h3>
+
+                    <p>{productAI?.verdict}</p>
                   </div>
                 </div>
-              </div>
 
-              <div className="summary">
-                <h3>🤖 AI Summary</h3>
-
-                {loadingAI ? (
-                  <p>Generating AI insights...</p>
-                ) : aiSummary ? (
-                  <p>{aiSummary.summary}</p>
+                {!showAssistant ? (
+                  <div className="assistant-start">
+                    <button
+                      className="generate-ai-btn"
+                      disabled={loadingAI}
+                      onClick={() => setShowAssistant(true)}
+                    >
+                      🤖 Start AI Assistant
+                    </button>
+                  </div>
                 ) : (
-                  <p>Unable to generate AI summary.</p>
+                  <div className="assistant-section">
+                    <div className="assistant-card">
+                      <h2>🤖 PriceRadar AI Assistant</h2>
+
+                      <p>Ask anything about this product.</p>
+
+                      <div className="assistant-input">
+                        <input
+                          value={question}
+                          onChange={(e) => setQuestion(e.target.value)}
+                          placeholder="Example: Is this good for gaming?"
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") askAI();
+                          }}
+                        />
+
+                        <button onClick={askAI}>Ask</button>
+                      </div>
+
+                      <div className="suggested-questions">
+                        <button
+                          onClick={() =>
+                            setQuestion("Is this good for gaming?")
+                          }
+                        >
+                          🎮 Gaming
+                        </button>
+
+                        <button
+                          onClick={() => setQuestion("Should I buy this?")}
+                        >
+                          💰 Worth Buying?
+                        </button>
+
+                        <button
+                          onClick={() =>
+                            setQuestion("Is this good for students?")
+                          }
+                        >
+                          🎓 Students
+                        </button>
+
+                        <button
+                          onClick={() => setQuestion("Is battery backup good?")}
+                        >
+                          🔋 Battery
+                        </button>
+                      </div>
+
+                      <button
+                        className="new-chat"
+                        onClick={() => setMessages([])}
+                      >
+                        🗑 New Chat
+                      </button>
+
+                      <button
+                        className="clear-cache"
+                        onClick={() => {
+                          Object.keys(localStorage).forEach((key) => {
+                            if (
+                              key.startsWith("productAI_") ||
+                              key.startsWith("chat_")
+                            ) {
+                              localStorage.removeItem(key);
+                            }
+                          });
+
+                          setProductAI(null);
+                          setRecommendations([]);
+                          setMessages([]);
+                          setShowAI(false);
+                          setShowAssistant(false);
+
+                          alert("AI Cache Cleared");
+                        }}
+                      >
+                        🗑 Clear AI Cache
+                      </button>
+
+                      {chatLoading && (
+                        <p className="thinking">
+                          🤖 PriceRadar AI is thinking...
+                        </p>
+                      )}
+
+                      <div className="chat-history">
+                        {messages.map((msg, index) => (
+                          <div
+                            key={index}
+                            className={
+                              msg.type === "user"
+                                ? "user-message"
+                                : "ai-message"
+                            }
+                          >
+                            <strong>
+                              {msg.type === "user"
+                                ? "👤 You"
+                                : "🤖 PriceRadar AI"}
+                            </strong>
+
+                            <p>{msg.text}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 )}
-              </div>
-
-              <div className="best-for">
-                <h3>🎯 Best For</h3>
-
-                <div className="best-tags">
-                  {loadingAI ? (
-                    <span>Loading...</span>
-                  ) : (
-                    aiSummary?.bestFor?.map((item, index) => (
-                      <span key={index} className="best-tag">
-                        {item}
-                      </span>
-                    ))
-                  )}
-                </div>
-              </div>
-            </div>
+              </>
+            )}
           </div>
 
           {/* Related Products */}
+          {showAI && (
+            <div className="ai-recommendations">
+              <h2>🤖 AI Recommended Alternatives</h2>
 
+              {loadingAI ? (
+                <p>Finding the best alternatives...</p>
+              ) : recommendations && recommendations.length > 0 ? (
+                recommendations.map((item, index) => (
+                  <div className="recommend-card" key={index}>
+                    <div>
+                      <h3>{item.name}</h3>
+
+                      <p>{item.reason}</p>
+                    </div>
+
+                    <div>
+                      <span>⭐ {item.score}/10</span>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p>No recommendations available.</p>
+              )}
+            </div>
+          )}
           <div className="related-products">
             <h2>You May Also Like</h2>
 
