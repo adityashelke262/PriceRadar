@@ -15,9 +15,9 @@ const Footer = () => {
 
       <div className="footer-left">
 
-        <img className="footer-logo" src={logo} alt="PriceRadar" />
+        <img className="footer-logo" src={logo} alt="SmartScout" />
 
-        <h3>PriceRadar</h3>
+        <h3>SmartScout</h3>
 
       </div>
 
@@ -41,7 +41,7 @@ const Footer = () => {
 
         <div className="footer-line">
 
-          <span>© 2026 PriceRadar</span>
+          <span>© 2026 SmartScout</span>
 
         </div>
 

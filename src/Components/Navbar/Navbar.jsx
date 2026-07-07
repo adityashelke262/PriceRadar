@@ -27,10 +27,10 @@ const Navbar = () => {
     {/* LEFT */}
 
     <Link to="/" className="navbar-logo">
-      <img src={logo} alt="PriceRadar" />
+      <img src={logo} alt="SmartScout" />
 
       <div>
-        <h2>PriceRadar</h2>
+        <h2>SmartScout</h2>
         <p>Compare • Save • Buy</p>
       </div>
     </Link>

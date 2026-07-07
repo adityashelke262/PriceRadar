@@ -16,7 +16,7 @@ app.register_blueprint(
 @app.route("/")
 def home():
 
-    return "PriceRadar Backend Running 🚀"
+    return "SmartScout Backend Running 🚀"
 
 
 if __name__ == "__main__":

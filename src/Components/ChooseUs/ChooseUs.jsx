@@ -5,7 +5,7 @@ const ChooseUs = () => {
   return (
     <section className="why">
 
-      <h2>Why Choose PriceRadar?</h2>
+      <h2>Why Choose SmartScout?</h2>
 
       <div className="why-grid">
 

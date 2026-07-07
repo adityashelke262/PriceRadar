@@ -419,7 +419,7 @@ const ProductOverview = () => {
           {/* AI Recommendation */}
 
           <div className="ai-recommendation">
-            <h2>🤖 PriceRadar AI</h2>
+            <h2>🤖 SmartScout AI</h2>
 
             {!showAI ? (
               <div className="generate-ai">
@@ -550,7 +550,7 @@ const ProductOverview = () => {
                 ) : (
                   <div className="assistant-section">
                     <div className="assistant-card">
-                      <h2>🤖 PriceRadar AI Assistant</h2>
+                      <h2>🤖 SmartScout AI Assistant</h2>
 
                       <p>Ask anything about this product.</p>
 
@@ -630,7 +630,7 @@ const ProductOverview = () => {
 
                       {chatLoading && (
                         <p className="thinking">
-                          🤖 PriceRadar AI is thinking...
+                          🤖 SmartScout AI is thinking...
                         </p>
                       )}
 
@@ -647,7 +647,7 @@ const ProductOverview = () => {
                             <strong>
                               {msg.type === "user"
                                 ? "👤 You"
-                                : "🤖 PriceRadar AI"}
+                                : "🤖 SmartScout AI"}
                             </strong>
 
                             <p>{msg.text}</p>

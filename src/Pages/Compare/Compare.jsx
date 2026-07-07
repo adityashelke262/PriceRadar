@@ -357,7 +357,7 @@ Generate AI insights and recommendations.
 :
         <div className="ai-card">
           <div className="ai-header">
-            <h2>🤖 PriceRadar AI Compare</h2>
+            <h2>🤖 SmartScout AI Compare</h2>
             <p>AI-powered comparison between these two products.</p>
           </div>
 
